@@ -1,0 +1,44 @@
+.app {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  min-height: 1px;
+  flex-flow: column nowrap;
+
+  &-head {
+    flex: 0 0 auto;
+    display: flex;
+    min-height: 1px;
+    flex-flow: column nowrap;
+    box-shadow: 0px 2px 5px 2px rgba(0,0,0,0.5);
+
+    &__spacer {
+      flex: 1 1 auto;
+    }
+
+    &__title {
+      box-shadow: 0px 0px 2px 1px rgba(0,0,0,0.5);
+    }
+
+    &__version {
+      padding: 0 1.6rem;
+    }
+
+    &__subtitle {
+      flex: 0 0 auto;
+      padding: 1rem 1.6rem 0 1.6rem;
+    }
+
+    &__instructions {
+      flex: 1 1 auto;
+      padding: 1rem 0;
+    }
+  }
+
+  &-body {
+    flex: 1 1 auto;
+    display: flex;
+    min-height: 1px;
+    flex-flow: column nowrap;
+  }
+}

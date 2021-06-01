@@ -1,0 +1,77 @@
+/************************* IMPORTS *************************/
+
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+
+@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+@import '@angular/material/prebuilt-themes/pink-bluegrey.css';
+@import '@angular/material/prebuilt-themes/purple-green.css';
+
+/************************* BASE STYLES *************************/
+
+html {
+    font-size: 10px;
+  * {
+    font-family: Roboto, "Helvetica Neue Light", "Helvetica Neue", Helvetica,Arial, "Lucida Grande", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+html,
+body {
+  margin: 0;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+body {
+  font-size: 1.4rem;
+  background: #FEFEFE;
+  color: rgba(0, 0, 0, 0.87);
+  transition: color, background-color 200ms linear;
+}
+
+/************************* BASE THEME *************************/
+
+// Import library functions for theme creation.
+@import '~@angular/material/theming';
+
+// Include non-theme styles for core.
+@include mat-core();
+
+/************************* LIGHT THEME *************************/
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$app-primary: mat-palette($mat-indigo);
+$app-accent:  mat-palette($mat-pink, A200, A100, A400);
+// The warn palette is optional (defaults to red).
+$app-warn:    mat-palette($mat-red);
+
+// Create the theme object (a Sass map containing all of the palettes).
+$app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include angular-material-theme($app-theme);
+
+/************************* DARK THEME *************************/
+
+// Define an alternate dark theme.
+$dark-primary: mat-palette($mat-pink, A200, A100, A400);
+$dark-accent:  mat-palette($mat-indigo);
+$dark-warn:    mat-palette($mat-red);
+$dark-theme:   mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
+
+// Include the alternative theme styles inside of a block with a CSS class. You can make this
+// CSS class whatever you want. In this example, any component inside of an element with
+// `.app-dark-theme` will be affected by this alternate dark theme instead of the default theme.
+.app-dark-theme {
+  @include angular-material-theme($dark-theme);
+  background: #303030;
+  color: #FFFFFF;
+}
