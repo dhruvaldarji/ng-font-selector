@@ -7,18 +7,4 @@
   height: 100%;
   display: flex;
   flex-flow: column nowrap;
-  justify-content: center;
-  align-items: center;
-
-  &__content {
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: space-between;
-    align-items: center;
-    padding: 2rem;
-
-    &-icon {
-      padding-right: 1rem;
-    }
-  }
 }

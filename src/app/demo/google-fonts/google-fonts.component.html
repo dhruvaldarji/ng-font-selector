@@ -1,0 +1,125 @@
+<div class="gf">
+  <div class="gf-header">
+    <div class="gf-form">
+      <mat-form-field class="gf-form__field gf-form__key">
+        <mat-label>API Key</mat-label>
+        <input matInput type="text" [value]="apiKey$ | async" (change)="setApiKey($event)" />
+        <mat-icon matPrefix>vpn_key</mat-icon>
+      </mat-form-field>
+    </div>
+    <form class="gf-form" [formGroup]="fontForm">
+      <mat-form-field class="gf-form__field">
+        <mat-label>Search</mat-label>
+        <input
+          class="gf-form__search"
+          matInput
+          type="text"
+          formControlName="search"
+        />
+        <mat-icon matPrefix>search</mat-icon>
+      </mat-form-field>
+
+      <mat-form-field class="gf-form__field">
+        <mat-label>Phrase</mat-label>
+        <input
+          class="gf-form__phrase"
+          matInput
+          type="text"
+          formControlName="phrase"
+        />
+        <mat-icon matPrefix>text_snippet</mat-icon>
+      </mat-form-field>
+
+      <div class="gf-form__field gf-form__font">
+        <mat-form-field class="gf-form__font-select">
+          <mat-label>Font Size</mat-label>
+          <mat-select class="gf-form__font-select" [value]="sizeControl.value?.value"
+            (selectionChange)="sizeControl.setValue($event)">
+            <mat-select-trigger>
+              <span *ngIf="sizeControl?.value">
+                {{ sizeControl?.value?.value }}px
+              </span>
+            </mat-select-trigger>
+            <ng-container>
+              <mat-option *ngFor="let size of fontSizesList" [value]="size.value"
+                [style.display]="size.show ? 'block' : 'none'">
+                {{ size.label }}
+              </mat-option>
+            </ng-container>
+          </mat-select>
+          <mat-icon matPrefix>format_size</mat-icon>
+        </mat-form-field>
+        <mat-slider class="gf-form__font-slider" aria-label="Pixels" thumbLabel [displayWith]="formatFontSizeLabel"
+          [tickInterval]="fontSizes.step" [step]="fontSizes.step" [min]="fontSizes.min" [max]="fontSizes.max"
+          [value]="sizeControl?.value?.value" (change)="sizeControl.setValue($event)" color="primary">
+        </mat-slider>
+      </div>
+
+      <div class="gf-form__field gf-form__reset">
+        <span>
+          <button
+            class="gf-form__reset-btn"
+            mat-icon-button
+            type="reset"
+            aria-label="Reset"
+            matTooltip="Reset"
+          >
+            <mat-icon>refresh</mat-icon>
+          </button>
+
+          <span class="gf-form__reset-text">Reset Form</span>
+        </span>
+      </div>
+    </form>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <div class="gf__metadata">
+    <mat-paginator *ngIf="pagination$ | async as pagination" [length]="total$ | async" [pageSize]="pagination.size"
+      [pageSizeOptions]="pageOptions$ | async" (page)="setPage($event)">
+    </mat-paginator>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <div class="gf__grid">
+    <mat-grid-list cols="3" rowHeight="25rem" gutterSize="1rem">
+      <ng-container *ngFor="let font of filterdData$ | async; let i=index">
+        <mat-grid-tile colspan="1">
+          <mat-card class="gf-card">
+            <mat-card-header class="gf-card__header">
+              <mat-card-title>{{font.family}}</mat-card-title>
+              <mat-card-subtitle>{{font.version}}</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content class="gf-card__body" contenteditable="false">
+              <app-font-renderer [fontFamily]="font.family" [fontUrl]="getFontUrl(font)"
+                [fontSize]="sizeControl?.value?.value">
+                {{ phraseControl?.value || '' }}
+              </app-font-renderer>
+            </mat-card-content>
+            <mat-card-footer>
+              <div class="gf-card__footer">
+                <mat-form-field class="gf-card__select">
+                  <mat-select placeholder="Font Variant" (change)="$event">
+                    <ng-container>
+                      <mat-option *ngFor="let variant of font.variants; let i=index" [value]="variant">
+                        {{ variant }}
+                      </mat-option>
+                    </ng-container>
+                  </mat-select>
+                </mat-form-field>
+                <div>
+                  <a mat-raised-button color="primary" aria-label="View Font" target="_blank"
+                    [href]="'https://fonts.google.com/specimen/' + font.family">
+                    View Font
+                  </a>
+                </div>
+              </div>
+            </mat-card-footer>
+          </mat-card>
+        </mat-grid-tile>
+      </ng-container>
+    </mat-grid-list>
+  </div>
+</div>
